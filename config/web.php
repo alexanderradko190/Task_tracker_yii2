@@ -48,15 +48,15 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/tasks'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/users'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/data'],
                 '/' => 'task/index',
-//                'task' => 'task/index',
                 'task/<id:\d+>' => 'task/view',
                 'task/update/<id:\d+>' => 'task/update',
                 'task/create/' => 'task/create',
                 'task/sort' => 'sort',
                 'worker' => 'worker/index',
-                'api/get-workers' => 'api/get-workers',
             ],
         ],
         'authManager' => [
