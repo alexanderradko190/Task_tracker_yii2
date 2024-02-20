@@ -21,7 +21,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $form->field($task, 'description')->textInput() ?>
 
-<?= $form->field($task, 'status')->textInput() ?>
+<?= $form->field($task, 'status')->dropDownList([
+    'Новая' => 'Новая',
+    'В работе' => 'В работе',
+    'На ревью' => 'На ревью',
+    'В тестировании' => 'В тестировании',
+    'Готова к релизу' => 'Готова к релизу',
+    'Решена' => 'Решена',
+    'Требуется информация' => 'Требуется информация'
+]) ?>
 
 <?= $form->field($task, 'story_point')->dropDownList([
     '0' => 'не указано',

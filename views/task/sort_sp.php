@@ -7,7 +7,6 @@ $this->title = 'Сортировка по story_point';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= Html::a('Назад', ['/']) ?>
 <div class="tasks-info-page w-80">
     <table class="w-100">
         <thead>

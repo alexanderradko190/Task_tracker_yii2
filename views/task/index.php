@@ -1,6 +1,3 @@
-<!--use app\controllers\EventController;-->
-
-
 <?php
 /** @var $this yii\web\View */
 
@@ -10,7 +7,11 @@ $this->title = 'Все задачи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= Html::a('Сортировать', ['task/sort']) ?>
+<div class="w-100 d-flex justify-content-evenly">
+    <?= Html::a('Сортировать по дате добавления', ['task/sort-date'], ['class' => 'mb-5 my-link text-decoration-none fz-18', 'target' => '_blank']) ?>
+    <?= Html::a('Сортировать по story_point', ['task/sort-sp'], ['class' => 'mb-5 my-link text-decoration-none fz-18', 'target' => '_blank']) ?>
+    <?= Html::a('Сортировать по дедлайну', ['task/sort-priority'], ['class' => 'mb-5 my-link text-decoration-none fz-18', 'target' => '_blank']) ?>
+</div>
 <div class="tasks-info-page w-80">
 <table class="w-100">
     <thead>

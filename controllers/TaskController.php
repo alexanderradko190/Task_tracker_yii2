@@ -5,11 +5,14 @@ namespace app\controllers;
 use app\models\TaskModel;
 use app\models\User;
 use app\models\WorkerModel;
+use app\traits\CreateValidationTrait;
 use Yii;
 use yii\web\Request;
 
 class TaskController extends \yii\web\Controller
 {
+    use CreateValidationTrait;
+
     public $tasks;
     public $organizations;
 
@@ -35,9 +38,19 @@ class TaskController extends \yii\web\Controller
     {
         $task = new TaskModel();
         $task->user_id = Yii::$app->user->id;
-        if ($task->load(Yii::$app->request->post()) && $task->save()) {
-            // Обработка успешного сохранения модели
-            return $this->redirect(['view', 'id' => $task->id]);
+        if ($task->load(Yii::$app->request->post())) {
+            $nameError = $this->validateText($task->name);
+            $descriptionError = $this->validateText($task->description);
+            if ($nameError === false) {
+                $task->addError('name', 'Название задачи может содержать только буквы или цифры');
+            } else if ($descriptionError === false) {
+                $task->addError('description', 'Описание задачи может содержать только буквы или цифры');
+            } else {
+                if ($task->save()) {
+                    return $this->redirect(['view', 'id' => $task->id]);
+                }
+
+            }
         }
 
         return $this->render('create', [
@@ -50,9 +63,19 @@ class TaskController extends \yii\web\Controller
     {
         $task = TaskModel::findOne($id);
 
-        if ($task->load(Yii::$app->request->post()) && $task->save()) {
+        if ($task->load(Yii::$app->request->post())) {
 
-            return $this->redirect(['view', 'id' => $task->id]);
+            $nameError = $this->validateText($task->name);
+            $descriptionError = $this->validateText($task->description);
+            if ($nameError === false) {
+                $task->addError('name', 'Название задачи может содержать только буквы или цифры');
+            } else if ($descriptionError === false) {
+                $task->addError('description', 'Описание задачи может содержать только буквы или цифры');
+            } else {
+                if ($task->save()) {
+                    return $this->redirect(['view', 'id' => $task->id]);
+                }
+            }
         }
 
         return $this->render('update', [
@@ -60,10 +83,26 @@ class TaskController extends \yii\web\Controller
         ]);
     }
 
-    public function actionSort() {
-        $tasks = TaskModel::find()->orderBy('story_point')->all();
+    public function actionSortSp() {
+        $tasks = TaskModel::find()->orderBy(['story_point' => SORT_ASC])->all();
 
-        return $this->render('index', [
+        return $this->render('sort_sp', [
+            'tasks' => $tasks,
+        ]);
+    }
+
+    public function actionSortPriority() {
+        $tasks = TaskModel::find()->orderBy(['date_end' => SORT_ASC])->all();
+
+        return $this->render('sort_priority', [
+            'tasks' => $tasks,
+        ]);
+    }
+
+    public function actionSortDate() {
+        $tasks = TaskModel::find()->orderBy(['id' => SORT_DESC])->all();
+
+        return $this->render('sort_priority', [
             'tasks' => $tasks,
         ]);
     }
