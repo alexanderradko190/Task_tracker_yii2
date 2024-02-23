@@ -43,10 +43,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($task, 'created_at')->textInput(['type' => 'datetime']) ?>
 
-    <div class="form-group">
+    <div class="form-group d-flex justify-content-between">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success mt-4']) ?>
+        <?= Html::button('Отменить действие', ['id' => 'cancel-button', 'class' => 'btn btn-danger mt-4']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 </div>
 </div>
+
+<?php
+$this->registerJs("
+    $('#cancel-button').on('click', function() {
+    var taskId = " . $task->id . ";
+    var url = '/task/' + taskId;
+    window.location.href = url;
+        window.history.back();
+    });
+");
+?>

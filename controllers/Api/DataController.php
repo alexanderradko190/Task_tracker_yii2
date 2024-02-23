@@ -12,6 +12,7 @@ class DataController extends Controller
         $data = TaskModel::find()
             ->select(['user.username', 'tasks.name', 'tasks.description', 'tasks.date_end', 'tasks.status', 'tasks.story_point'])
             ->leftJoin('user', 'tasks.user_id = user.id')
+            ->orderBy([])
             ->asArray()
             ->all();
 

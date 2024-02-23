@@ -140,6 +140,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getTasks()
     {
-        return $this->hasMany(TaskModel::class, ['user_id' => 'id']);
+        return $this->hasMany(TaskModel::class, ['user_id' => 'id'])->orderBy(['date_end' => SORT_ASC]);
     }
 }

@@ -5,6 +5,7 @@ use yii\helpers\Html;
 
 $this->title = 'Все задачи';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="w-100 d-flex justify-content-evenly">
@@ -23,11 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
     </thead>
     <tbody>
     <tr>
-        <td class="p-0 m-0" style="border: 1px solid black;">
+        <td class="p-0 m-0 border border-dark">
 
             <?php foreach($tasks as $task):
                 ?>
-                <div class="task-name m-0" style="border-bottom: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+
+                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="height: 70px;">
                     <?= Html::a($task->name, ['task/'.$task->id], ['class' => 'my-link text-decoration-none fz-18 text-black', 'target' => '_blank']); ?>
                 </div>
             <?php
@@ -37,8 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php foreach($tasks as $task):
                 ?>
-                <div class="task-name m-0" style="border-bottom: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
-                        <p><?= $task->date_end; ?></p>
+
+                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
+                    <p><?= $task->date_end; ?></p>
                 </div>
             <?php
             endforeach;
@@ -47,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php foreach($tasks as $task):
                 ?>
-                <div class="task-name m-0" style="border-bottom: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
                     <p><?= $task->story_point; ?></p>
                 </div>
             <?php

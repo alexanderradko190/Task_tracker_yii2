@@ -4,10 +4,8 @@ namespace app\controllers;
 
 use app\models\TaskModel;
 use app\models\User;
-use app\models\WorkerModel;
 use app\traits\CreateValidationTrait;
 use Yii;
-use yii\web\Request;
 
 class TaskController extends \yii\web\Controller
 {
@@ -18,7 +16,7 @@ class TaskController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $tasks = TaskModel::find()->orderBy('date_end')->all();
+        $tasks = TaskModel::find()->orderBy(['updated_at' => SORT_DESC])->all();
         $workers = User::find()->orderBy('rate')->all();
 
         return $this->render('index', [
@@ -105,11 +103,6 @@ class TaskController extends \yii\web\Controller
         return $this->render('sort_priority', [
             'tasks' => $tasks,
         ]);
-    }
-
-
-    public function actionDelete($id) {
-
     }
 
 }

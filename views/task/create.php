@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 
@@ -49,9 +48,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group d-flex justify-content-between">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Отменить действие', ['/task'], ['class' => 'btn btn-danger', 'target' => '_blank']); ?>
+        <?= Html::button('Отменить действие', ['id' => 'cancel-button', 'class' => 'btn btn-danger']) ?>
     </div>
 
 <?php ActiveForm::end(); ?>
     </div>
     </div>
+
+<?php
+$this->registerJs("
+    $('#cancel-button').on('click', function() {
+        window.history.back();
+    });
+");
+?>

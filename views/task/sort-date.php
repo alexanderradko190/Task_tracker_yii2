@@ -11,9 +11,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="w-100">
         <thead>
         <tr>
-            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Задача</th>
-            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Дедлайн</th>
-            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Story point</th>
+            <th class="border border-dark pt-3 pb-3 ps-5">Задача</th>
+            <th class="border border-dark pt-3 pb-3 ps-5">Дедлайн</th>
+            <th class="border border-dark pt-3 pb-3 ps-5">Story point</th>
         </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php foreach($tasks as $task):
                     ?>
-                    <div class="task-name m-0" style="border-bottom: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5">
                         <?= Html::a($task->name, ['task/'.$task->id], ['class' => 'my-link text-decoration-none fz-18 text-black', 'target' => '_blank']); ?>
                     </div>
                 <?php
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php foreach($tasks as $task):
                     ?>
-                    <div class="task-name m-0" style="border-bottom: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5">
                         <p><?= $task->date_end; ?></p>
                     </div>
                 <?php
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php foreach($tasks as $task):
                     ?>
-                    <div class="task-name m-0" style="border-bottom: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5">
                         <p><?= $task->story_point; ?></p>
                     </div>
                 <?php

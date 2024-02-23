@@ -51,6 +51,7 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/tasks'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/users'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/data'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/workers'],
                 '/' => 'task/index',
                 'task/<id:\d+>' => 'task/view',
                 'task/update/<id:\d+>' => 'task/update',
@@ -59,6 +60,7 @@ $config = [
                 'task/sort-priority' => 'task/sort-priority',
                 'task/sort-date' => 'task/sort-date',
                 'worker' => 'worker/index',
+                'worker/rating' => 'worker/rating',
             ],
         ],
         'authManager' => [

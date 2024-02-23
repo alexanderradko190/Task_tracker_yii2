@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "workers".
  *
@@ -60,6 +58,11 @@ class WorkerModel extends \yii\db\ActiveRecord
 
     public function getUser() {
         return $this->hasOne(User::class, ['workers_id' => 'id']);
+    }
+
+    public function getWorkerRating()
+    {
+        return $this->hasOne(WorkersRatingModel::class, ['worker_id' => 'id']);
     }
 
 }

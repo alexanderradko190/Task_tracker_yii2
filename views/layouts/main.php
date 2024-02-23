@@ -43,6 +43,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             Yii::$app->user->isGuest ? '' : ['label' => 'Все задачи', 'url' => ['/']],
             Yii::$app->user->isGuest ? '' : ['label' => 'Создать задачу', 'url' => ['/task/create/']],
             Yii::$app->user->isGuest ? '' : ['label' => 'Задачи по исполнителям', 'url' => ['/worker']],
+            Yii::$app->user->isGuest ? '' : ['label' => 'Рейтинг исполнителей', 'url' => ['/worker/rating']],
             Yii::$app->user->isGuest ? ['label' => 'Login', 'url' => ['/site/login']] : '',
             Yii::$app->user->isGuest ? ['label' => 'Signup', 'url' => ['/site/signup']]
                 : '<li class="nav-item d-flex flex-end mx-3">'
@@ -72,7 +73,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <footer id="footer" class="mt-auto py-3 bg-light">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
+            <div class="col-md-6 text-center text-md-start"> Радько Александр <?= date('Y') ?></div>
             <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
         </div>
     </div>
