@@ -51,7 +51,7 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/tasks'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/users'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/data'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/workers'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/workers-rating'],
                 '/' => 'task/index',
                 'task/<id:\d+>' => 'task/view',
                 'task/update/<id:\d+>' => 'task/update',
