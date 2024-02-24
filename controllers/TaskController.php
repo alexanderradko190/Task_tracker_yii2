@@ -4,18 +4,22 @@ namespace app\controllers;
 
 use app\models\TaskModel;
 use app\models\User;
+use app\traits\CheckAuthUsersTrait;
 use app\traits\CreateValidationTrait;
 use Yii;
 
 class TaskController extends \yii\web\Controller
 {
-    use CreateValidationTrait;
+    use CreateValidationTrait, CheckAuthUsersTrait;
 
     public $tasks;
     public $organizations;
 
     public function actionIndex()
     {
+        //        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $tasks = TaskModel::find()->orderBy(['updated_at' => SORT_DESC])->all();
         $workers = User::find()->orderBy('rate')->all();
 
@@ -25,7 +29,10 @@ class TaskController extends \yii\web\Controller
         ]);
     }
 
-    public function actionView($id) {
+    public function actionView($id)
+    {
+        //        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
 
         return $this->render('view', [
             'task' => TaskModel::findOne($id),
@@ -34,6 +41,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionCreate()
     {
+        //        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $task = new TaskModel();
         $task->user_id = Yii::$app->user->id;
         if ($task->load(Yii::$app->request->post())) {
@@ -59,6 +69,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
+        //        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $task = TaskModel::findOne($id);
 
         if ($task->load(Yii::$app->request->post())) {
@@ -82,6 +95,9 @@ class TaskController extends \yii\web\Controller
     }
 
     public function actionSortSp() {
+//        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $tasks = TaskModel::find()->orderBy(['story_point' => SORT_ASC])->all();
 
         return $this->render('sort_sp', [
@@ -90,6 +106,9 @@ class TaskController extends \yii\web\Controller
     }
 
     public function actionSortPriority() {
+//        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $tasks = TaskModel::find()->orderBy(['date_end' => SORT_ASC])->all();
 
         return $this->render('sort_priority', [
@@ -98,6 +117,9 @@ class TaskController extends \yii\web\Controller
     }
 
     public function actionSortDate() {
+//        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $tasks = TaskModel::find()->orderBy(['id' => SORT_DESC])->all();
 
         return $this->render('sort_priority', [

@@ -61,6 +61,7 @@ $config = [
                 'task/sort-date' => 'task/sort-date',
                 'worker' => 'worker/index',
                 'worker/rating' => 'worker/rating',
+                'info' => 'info/index',
             ],
         ],
         'authManager' => [

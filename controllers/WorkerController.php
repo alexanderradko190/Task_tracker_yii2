@@ -2,16 +2,18 @@
 
 namespace app\controllers;
 
-use app\models\TaskModel;
 use app\models\User;
-use app\models\WorkerModel;
-use app\models\WorkersRatingModel;
+use app\traits\CheckAuthUsersTrait;
 use yii\db\Query;
 
 class WorkerController extends \yii\web\Controller
 {
+    use CheckAuthUsersTrait;
     public function actionIndex()
     {
+//        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $workers = User::find()->all();
 
         return $this->render('index', [
@@ -21,6 +23,9 @@ class WorkerController extends \yii\web\Controller
 
     public function actionRating()
     {
+        //        Проверка на ошибку доступа к странице
+        $this->checkAuthorization();
+
         $query = new Query();
         $query->select('u.username, w.rating')
             ->from('user u')

@@ -4,7 +4,6 @@ namespace app\controllers\api;
 
 use app\models\TaskModel;
 use yii\rest\Controller;
-use app\models\User;
 
 class DataController extends Controller
 {

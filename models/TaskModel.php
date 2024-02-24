@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use yii\db\Query;
-
 /**
  * This is the model class for table "tasks".
  *

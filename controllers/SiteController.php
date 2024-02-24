@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\models\SignupForm;
-use app\models\TaskModel;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -56,15 +55,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
-//    public function actionEvents()
-//    {
-////        var_dump('123');
-////        die();
-//        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-//
-//        return EventModel::find()->select(['events.*', 'organizations.fio'])->with('organizations')->all();
-//    }
 
     /**
      * Displays homepage.

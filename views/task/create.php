@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-
 $this->title = 'Создать задачу';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -2,8 +2,6 @@
 
 namespace app\traits;
 
-use yii\base\InvalidConfigException;
-
 trait CreateValidationTrait
 {
     public function validateText($value)
