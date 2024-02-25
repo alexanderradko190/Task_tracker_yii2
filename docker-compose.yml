@@ -15,7 +15,7 @@ services:
       MYSQL_PASSWORD:
       MYSQL_DATABASE: Yii2-database
   mariadb:
-    image: mysql
+    image: mariadb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
