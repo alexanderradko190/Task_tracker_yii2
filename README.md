@@ -10,13 +10,15 @@ http://localhost:8080/api/data
 4. Всех исполнителей с именами и рейтингом и внутри массива каждого исполнителя все его задачи со статусом "Решена", story_point и датой закрытия </br>
 http://localhost:8080/api/workers-rating
 
+Вынес логику для API методов в отдельный сервисный слой приложения </br>
+
 Чтобы развернуть проект, нужно выполнить следующие команды: </br>
 
-git clone https://github.com/alexanderradko190/Yii2_task_tracker.git
+git clone https://github.com/alexanderradko190/Task_tracker_yii2.git
 
 Переходим в проект </br>
 
-cd Yii2_task_tracker
+cd Task_tracker_yii2
 
 Открыть папку config и файл db.php и указать название таблицы, логин и пароль для базы данных </br>
 
