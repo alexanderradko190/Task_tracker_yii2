@@ -8,9 +8,21 @@ services:
     ports:
       - '8000:80'
   db:
-    image: registry.sovcombank.group/library/library/mariadb
+    image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: db
       MYSQL_PASSWORD:
       MYSQL_DATABASE: Yii2-database
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Yii2-database
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - /path/to/store/database:/var/lib/mysql
+    ports:
+      - "3306:3306"

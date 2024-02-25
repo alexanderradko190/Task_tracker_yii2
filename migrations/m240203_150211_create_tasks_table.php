@@ -30,23 +30,6 @@ class m240203_150211_create_tasks_table extends Migration
      */
     public function safeDown()
     {
-        echo "m240203_150211_tasks cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%tasks}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m240203_150211_tasks cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

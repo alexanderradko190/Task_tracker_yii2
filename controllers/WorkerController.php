@@ -2,19 +2,26 @@
 
 namespace app\controllers;
 
-use app\models\User;
+use app\repositories\UserRepository;
 use app\traits\CheckAuthUsersTrait;
-use yii\db\Query;
 
 class WorkerController extends \yii\web\Controller
 {
     use CheckAuthUsersTrait;
+
+    private $userRepository;
+
+    public function __construct($id, $module, UserRepository $userRepository, $config = [])
+    {
+        $this->userRepository = $userRepository;
+        parent::__construct($id, $module, $config);
+    }
+
     public function actionIndex()
     {
-//        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
-        $workers = User::find()->all();
+        $workers = $this->userRepository->getAllUsers();
 
         return $this->render('index', [
             'workers' => $workers,
@@ -23,17 +30,9 @@ class WorkerController extends \yii\web\Controller
 
     public function actionRating()
     {
-        //        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
-        $query = new Query();
-        $query->select('u.username, w.rating')
-            ->from('user u')
-            ->leftJoin('workers_rating  w', 'w.worker_id = u.id')
-        ->orderBy(['w.rating' => SORT_DESC]);
-
-        $command = $query->createCommand();
-        $ratingData = $command->queryAll();
+        $ratingData = $this->userRepository->getWorkersByRating();
 
         return $this->render('rating', [
             'ratingData' => $ratingData,

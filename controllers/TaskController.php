@@ -3,7 +3,8 @@
 namespace app\controllers;
 
 use app\models\TaskModel;
-use app\models\User;
+use app\repositories\TaskRepository;
+use app\repositories\UserRepository;
 use app\traits\CheckAuthUsersTrait;
 use app\traits\CreateValidationTrait;
 use Yii;
@@ -13,15 +14,22 @@ class TaskController extends \yii\web\Controller
     use CreateValidationTrait, CheckAuthUsersTrait;
 
     public $tasks;
-    public $organizations;
+    private $taskRepository;
+    private $userRepository;
+
+    public function __construct($id, $module, TaskRepository $taskRepository, UserRepository $userRepository, $config = [])
+    {
+        $this->taskRepository = $taskRepository;
+        $this->userRepository = $userRepository;
+        parent::__construct($id, $module, $config);
+    }
 
     public function actionIndex()
     {
-        //        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
-        $tasks = TaskModel::find()->orderBy(['updated_at' => SORT_DESC])->all();
-        $workers = User::find()->orderBy('rate')->all();
+        $tasks = $this->taskRepository->getAllTasks();
+        $workers = $this->userRepository->getAllUsers();
 
         return $this->render('index', [
             'tasks' => $tasks,
@@ -31,7 +39,6 @@ class TaskController extends \yii\web\Controller
 
     public function actionView($id)
     {
-        //        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
         return $this->render('view', [
@@ -41,10 +48,10 @@ class TaskController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        //        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
         $task = new TaskModel();
+
         $task->user_id = Yii::$app->user->id;
         if ($task->load(Yii::$app->request->post())) {
             $nameError = $this->validateText($task->name);
@@ -69,10 +76,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
-        //        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
-        $task = TaskModel::findOne($id);
+        $task = $this->taskRepository->getTaskById($id);
 
         if ($task->load(Yii::$app->request->post())) {
 
@@ -95,10 +101,9 @@ class TaskController extends \yii\web\Controller
     }
 
     public function actionSortSp() {
-//        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
-        $tasks = TaskModel::find()->orderBy(['story_point' => SORT_ASC])->all();
+        $tasks = $this->taskRepository->getTasksByStoryPoint();
 
         return $this->render('sort_sp', [
             'tasks' => $tasks,
@@ -106,10 +111,9 @@ class TaskController extends \yii\web\Controller
     }
 
     public function actionSortPriority() {
-//        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
-        $tasks = TaskModel::find()->orderBy(['date_end' => SORT_ASC])->all();
+        $tasks = $this->taskRepository->getTasksByPriority();
 
         return $this->render('sort_priority', [
             'tasks' => $tasks,
@@ -117,10 +121,9 @@ class TaskController extends \yii\web\Controller
     }
 
     public function actionSortDate() {
-//        Проверка на ошибку доступа к странице
         $this->checkAuthorization();
 
-        $tasks = TaskModel::find()->orderBy(['id' => SORT_DESC])->all();
+        $tasks = $this->taskRepository->getTasksByDate();
 
         return $this->render('sort_priority', [
             'tasks' => $tasks,

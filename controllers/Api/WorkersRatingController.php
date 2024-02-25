@@ -2,41 +2,43 @@
 
 namespace app\controllers\api;
 
-use app\models\TaskModel;
-use app\models\User;
+use app\services\UserService;
 use yii\rest\Controller;
 
 class WorkersRatingController extends Controller
 {
+    private $userService;
+
+    public function __construct($id, $module, UserService $userService, $config = [])
+    {
+        $this->userService = $userService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function actionIndex()
     {
-//        Получаем массив исполнителей  сортировкой по id
-        $users = User::find()
-            ->select(['user.id', 'user.username', 'workers_rating.rating'])
-            ->leftJoin('workers_rating', 'user.id = workers_rating.worker_id')
-            ->orderBy(['user.id' => SORT_ASC])
-            ->asArray()
-            ->all();
-
-        $month = date('m');
-        $year = date('Y');
+        $users = $this->userService->getUsersAndTasksByUserId();
 
         $userData = [];
 
-//        Перебираем исполнителей и присваиваем в массив каждого исполнителя
-//        id, name, status, story_point  дату закрытия задачи
+//        Через eager loading в yii2 получаем данные по таскам текущего исполнителя и присваиваем
+//        в массив $userData: id, name, status, story_point и дату закрытия задачи
         foreach ($users as $user) {
-            $tasks = TaskModel::find()
-                ->select(['tasks.id', 'tasks.name', 'tasks.status', 'tasks.story_point', 'tasks.updated_at as closed'])
-                ->where(['user_id' => $user['id'], 'status' => 'Решена'])
-                ->andWhere(['MONTH(created_at)' => $month, 'YEAR(created_at)' => $year])
-                ->asArray()
-                ->all();
+            $tasks = [];
+            foreach ($user['tasks'] as $task) {
+                $tasks = [
+                    'id' => $task['id'],
+                    'name' => $task['name'],
+                    'status' => $task['status'],
+                    'story_point' => $task['story_point'] ?? '',
+                    'closed' => $task['updated_at']
+                ];
+            }
 
             $userData[] = [
                 'id' => $user['id'],
                 'user_name' => $user['username'],
-                'rating' => $user['rating'],
+                'rating' => $user['rating'] ?? 0,
                 'tasks' => $tasks
             ];
         }

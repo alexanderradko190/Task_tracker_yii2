@@ -3,7 +3,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Сортировка по ате добавления';
+$this->title = 'Сортировка по дате добавления';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

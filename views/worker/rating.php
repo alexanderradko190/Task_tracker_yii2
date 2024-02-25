@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <tbody>
 
 <?php foreach ($ratingData as $item) {
+//    var_dump($item);
+//    die();
     ?>
         <tr>
             <td class="w-70 border border-dark m-4 p-4">
