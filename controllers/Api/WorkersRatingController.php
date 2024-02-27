@@ -2,22 +2,22 @@
 
 namespace app\controllers\api;
 
-use app\services\UserService;
+use app\repositories\UserRepository;
 use yii\rest\Controller;
 
 class WorkersRatingController extends Controller
 {
-    private $userService;
+    private $userRepository;
 
-    public function __construct($id, $module, UserService $userService, $config = [])
+    public function __construct($id, $module, UserRepository $userRepository, $config = [])
     {
-        $this->userService = $userService;
+        $this->userRepository = $userRepository;
         parent::__construct($id, $module, $config);
     }
 
     public function actionIndex()
     {
-        $users = $this->userService->getUsersAndTasksByUserId();
+        $users = $this->userRepository->getUsersAndTasksByUserId();
 
         $userData = [];
 

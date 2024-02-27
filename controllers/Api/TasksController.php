@@ -2,22 +2,22 @@
 
 namespace app\controllers\api;
 
-use app\services\TaskService;
+use app\repositories\TaskRepository;
 use yii\rest\Controller;
 
 class TasksController extends Controller
 {
-    private $taskService;
+    private $taskRepository;
 
-    public function __construct($id, $module, TaskService $taskService, $config = [])
+    public function __construct($id, $module, TaskRepository $taskRepository, $config = [])
     {
-        $this->taskService = $taskService;
+        $this->taskRepository = $taskRepository;
         parent::__construct($id, $module, $config);
     }
 
     public function actionIndex()
     {
-        $tasks = $this->taskService->getAllTasksById();
+        $tasks = $this->taskRepository->getAllTasksById();
 
         return $tasks;
     }

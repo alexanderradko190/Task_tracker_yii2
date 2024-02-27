@@ -10,4 +10,6 @@ interface TaskRepositoryInterface
     public function getTasksByStoryPoint();
     public function getTasksByPriority();
     public function getTasksByDate();
+    public function getTaskAndUserData();
+    public function getAllTasksById();
 }

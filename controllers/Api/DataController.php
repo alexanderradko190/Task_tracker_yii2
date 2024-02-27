@@ -2,21 +2,21 @@
 
 namespace app\controllers\api;
 
-use app\services\TaskService;
+use app\repositories\TaskRepository;
 use yii\rest\Controller;
 
 class DataController extends Controller
 {
-    private $taskService;
+    private $taskRepository;
 
-    public function __construct($id, $module, TaskService $taskService, $config = [])
+    public function __construct($id, $module, TaskRepository $taskRepository, $config = [])
     {
-        $this->taskService = $taskService;
+        $this->taskRepository = $taskRepository;
         parent::__construct($id, $module, $config);
     }
 
     public function actionIndex() {
-        $data = $this->taskService->getTaskAndUserData();
+        $data = $this->taskRepository->getTaskAndUserData();
 
         $resultData = [];
         foreach ($data as $item) {
