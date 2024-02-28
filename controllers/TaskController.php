@@ -100,7 +100,8 @@ class TaskController extends \yii\web\Controller
         ]);
     }
 
-    public function actionSortSp() {
+    public function actionSortSp()
+    {
         $this->checkAuthorization();
 
         $tasks = $this->taskRepository->getTasksByStoryPoint();
@@ -110,7 +111,8 @@ class TaskController extends \yii\web\Controller
         ]);
     }
 
-    public function actionSortPriority() {
+    public function actionSortPriority()
+    {
         $this->checkAuthorization();
 
         $tasks = $this->taskRepository->getTasksByPriority();
@@ -120,7 +122,8 @@ class TaskController extends \yii\web\Controller
         ]);
     }
 
-    public function actionSortDate() {
+    public function actionSortDate()
+    {
         $this->checkAuthorization();
 
         $tasks = $this->taskRepository->getTasksByDate();

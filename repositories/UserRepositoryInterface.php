@@ -4,8 +4,8 @@ namespace app\repositories;
 
 interface UserRepositoryInterface
 {
-    public function getWorkersByRating();
-    public function getAllUsers();
-    public function getAllWorkersById();
-    public function getUsersAndTasksByUserId();
+    public function getWorkersByRating(): array;
+    public function getAllUsers(): array;
+    public function getAllWorkersById(): array;
+    public function getUsersAndTasksByUserId(): array;
 }

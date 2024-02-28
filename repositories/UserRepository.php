@@ -7,7 +7,7 @@ use yii\db\Query;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function getWorkersByRating()
+    public function getWorkersByRating(): array
     {
         $query = new Query();
         $query->select('u.username, w.rating')
@@ -16,21 +16,23 @@ class UserRepository implements UserRepositoryInterface
             ->orderBy(['w.rating' => SORT_DESC]);
 
         $command = $query->createCommand();
+
         return $command->queryAll();
     }
 
-    public function getAllUsers()
+    public function getAllUsers(): array
     {
         return User::find()->orderBy('id')->all();
     }
-    public function getAllWorkersById()
+
+    public function getAllWorkersById(): array
     {
         return User::find()
             ->select(['id', 'username', 'email'])
             ->orderBy('id')->all();
     }
 
-    public function getUsersAndTasksByUserId()
+    public function getUsersAndTasksByUserId(): array
     {
         return User::find()
             ->select(['user.id', 'user.username', 'workers_rating.rating'])

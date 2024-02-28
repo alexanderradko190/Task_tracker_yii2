@@ -6,33 +6,37 @@ use app\models\TaskModel;
 
 class TaskRepository implements TaskRepositoryInterface
 {
-    public function getUnresolvedTasks()
+    public function getUnresolvedTasks(): array
     {
         return TaskModel::find()->where(['not', ['status' => 'Решена']])->orderBy(['updated_at' => SORT_DESC])->all();
     }
 
-    public function getTaskById($id)
+    public function getTaskById($id): object
     {
         return TaskModel::findOne($id);
     }
 
-    public function getAllTasks()
+    public function getAllTasks(): array
     {
         return TaskModel::find()->orderBy(['updated_at' => SORT_DESC])->all();
     }
 
-    public function getTasksByStoryPoint() {
+    public function getTasksByStoryPoint(): array
+    {
         return TaskModel::find()->orderBy(['story_point' => SORT_ASC])->all();
     }
 
-    public function getTasksByPriority() {
+    public function getTasksByPriority(): array
+    {
         return TaskModel::find()->orderBy(['date_end' => SORT_ASC])->all();
     }
 
-    public function getTasksByDate() {
+    public function getTasksByDate(): array
+    {
         return TaskModel::find()->orderBy(['id' => SORT_DESC])->all();
     }
-    public function getTaskAndUserData()
+
+    public function getTaskAndUserData(): array
     {
         return TaskModel::find()
             ->select(['user.username', 'tasks.name', 'tasks.description', 'tasks.date_end', 'tasks.status', 'tasks.story_point'])
@@ -42,7 +46,7 @@ class TaskRepository implements TaskRepositoryInterface
             ->all();
     }
 
-    public function getAllTasksById()
+    public function getAllTasksById(): array
     {
         return TaskModel::find()
             ->select(['name', 'status', 'date_end', 'story_point'])

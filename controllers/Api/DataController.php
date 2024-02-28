@@ -15,7 +15,8 @@ class DataController extends Controller
         parent::__construct($id, $module, $config);
     }
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $data = $this->taskRepository->getTaskAndUserData();
 
         $resultData = [];

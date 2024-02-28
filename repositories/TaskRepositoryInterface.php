@@ -4,12 +4,12 @@ namespace app\repositories;
 
 interface TaskRepositoryInterface
 {
-    public function getUnresolvedTasks();
-    public function getTaskById($id);
-    public function getAllTasks();
-    public function getTasksByStoryPoint();
-    public function getTasksByPriority();
-    public function getTasksByDate();
-    public function getTaskAndUserData();
-    public function getAllTasksById();
+    public function getUnresolvedTasks(): array;
+    public function getTaskById($id): object;
+    public function getAllTasks(): array;
+    public function getTasksByStoryPoint(): array;
+    public function getTasksByPriority(): array;
+    public function getTasksByDate(): array;
+    public function getTaskAndUserData(): array;
+    public function getAllTasksById(): array;
 }
