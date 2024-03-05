@@ -11,7 +11,7 @@ class TaskRepository implements TaskRepositoryInterface
         return TaskModel::find()->where(['not', ['status' => 'Решена']])->orderBy(['updated_at' => SORT_DESC])->all();
     }
 
-    public function getTaskById($id): object
+    public function getTaskById(string $id): object
     {
         return TaskModel::findOne($id);
     }

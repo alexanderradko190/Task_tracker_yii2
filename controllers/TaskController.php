@@ -5,13 +5,12 @@ namespace app\controllers;
 use app\models\TaskModel;
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
-use app\traits\CheckAuthUsersTrait;
 use app\traits\CreateValidationTrait;
 use Yii;
 
 class TaskController extends \yii\web\Controller
 {
-    use CreateValidationTrait, CheckAuthUsersTrait;
+    use CreateValidationTrait;
 
     public $tasks;
     private $taskRepository;
@@ -26,7 +25,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $tasks = $this->taskRepository->getAllTasks();
         $workers = $this->userRepository->getAllUsers();
@@ -39,7 +40,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionView($id)
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         return $this->render('view', [
             'task' => TaskModel::findOne($id),
@@ -48,7 +51,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $task = new TaskModel();
 
@@ -76,7 +81,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $task = $this->taskRepository->getTaskById($id);
 
@@ -102,7 +109,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionSortSp()
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $tasks = $this->taskRepository->getTasksByStoryPoint();
 
@@ -113,7 +122,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionSortPriority()
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $tasks = $this->taskRepository->getTasksByPriority();
 
@@ -124,7 +135,9 @@ class TaskController extends \yii\web\Controller
 
     public function actionSortDate()
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $tasks = $this->taskRepository->getTasksByDate();
 

@@ -4,12 +4,10 @@ namespace app\controllers;
 
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
-use app\traits\CheckAuthUsersTrait;
+use Yii;
 
 class InfoController extends \yii\web\Controller
 {
-    use CheckAuthUsersTrait;
-
     private $taskRepository;
     private $userRepository;
 
@@ -22,7 +20,9 @@ class InfoController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $this->checkAuthorization();
+         if (Yii::$app->user->isGuest) {
+             return $this->redirect(['/site/login']);
+         }
 
         $tasks = $this->taskRepository->getUnresolvedTasks();
         $workers = $this->userRepository->getWorkersByRating();

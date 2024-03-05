@@ -43,8 +43,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             !Yii::$app->user->isGuest ? ['label' => 'Задачи по исполнителям', 'url' => ['/worker']] : '',
             !Yii::$app->user->isGuest ? ['label' => 'Рейтинг исполнителей', 'url' => ['/worker/rating']] : '',
             !Yii::$app->user->isGuest ? ['label' => 'Инфо', 'url' => ['/info/index']] : '',
-            Yii::$app->user->isGuest ? ['label' => 'Login', 'url' => ['/site/login']] : '',
-            Yii::$app->user->isGuest ? ['label' => 'Signup', 'url' => ['/site/signup']] : '',
+            Yii::$app->user->isGuest ? ['label' => 'Вход', 'url' => ['/site/login']] : '',
+            Yii::$app->user->isGuest ? ['label' => 'Регистрация', 'url' => ['/site/signup']] : '',
             !Yii::$app->user->isGuest ?
                 '<li class="nav-item d-flex flex-end mx-3">'
                 . Html::beginForm(['/site/logout'])

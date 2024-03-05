@@ -3,12 +3,10 @@
 namespace app\controllers;
 
 use app\repositories\UserRepository;
-use app\traits\CheckAuthUsersTrait;
+use Yii;
 
 class WorkerController extends \yii\web\Controller
 {
-    use CheckAuthUsersTrait;
-
     private $userRepository;
 
     public function __construct($id, $module, UserRepository $userRepository, $config = [])
@@ -19,7 +17,9 @@ class WorkerController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $workers = $this->userRepository->getAllUsers();
 
@@ -30,7 +30,9 @@ class WorkerController extends \yii\web\Controller
 
     public function actionRating()
     {
-        $this->checkAuthorization();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $ratingData = $this->userRepository->getWorkersByRating();
 
