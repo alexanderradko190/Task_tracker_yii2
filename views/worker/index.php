@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="mt-3 d-flex flex-row justify-content-between">
                     Дедлайн
                     <div>
-                        <?= $task->date_end; ?>
+                        <?= date('d-m-Y', strtotime($task->date_end)); ?>
                     </div>
                 </div>
                 <div class="mt-3 d-flex flex-row justify-content-between">

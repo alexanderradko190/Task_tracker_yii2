@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach($tasks as $task):
                     ?>
                     <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5">
-                        <p><?= $task->date_end; ?></p>
+                        <p><?= date('d-m-Y', strtotime($task->date_end)); ?></p>
                     </div>
                 <?php
                 endforeach;

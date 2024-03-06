@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
 
                 <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
-                    <p><?= $task->date_end; ?></p>
+                    <p><?= date('d-m-Y', strtotime($task->date_end)); ?></p>
                 </div>
             <?php
             endforeach;

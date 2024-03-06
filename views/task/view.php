@@ -2,32 +2,34 @@
 use yii\helpers\Html;
 
 $this->title = $task->name;
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $task->name;
 ?>
 
-<div class="task-info-page w-80">
+<div class="task-info-page w-50">
 <table class="w-100">
-    <thead>
-    <tr>
-        <th class="text-center m-4 p-4 border border-black">Описание задачи</th>
-        <th class="text-center m-4 p-4 border border-black">Статус</th>
-        <th class="text-center m-4 p-4 border border-black">Приоритет</th>
-        <th class="text-center m-4 p-4 border border-black">Ответственные</th>
-        <th class="text-center m-4 p-4 border border-black">Дедлайн</th>
-        <th class="text-center m-4 p-4 border border-black">Дата создания</th>
-    </tr>
-    </thead>
     <tbody>
     <tr>
-    <tr>
-        <td class="m-4 p-4 border border-black">
+        <td class="m-4 p-4">
+            <div>Описание задачи</div>
+        </td>
+        <td class="m-4 p-4">
             <div><?= $task->description; ?></div>
+        </td>
+    </tr>
+    <tr>
+        <td class="m-4 p-4">
+            <div>Статус</div>
             </td>
-        <td class="m-4 p-4 border border-black">
+        <td class="m-4 p-4">
             <div><?= $task->status; ?></div>
-            </td>
-        <td class="m-4 p-4 border border-black">
-            <div class="text-center <?php
+        </td>
+    </tr>
+    <tr>
+        <td class="m-4 p-4">
+            <div>Приоритет</div>
+        </td>
+        <td class="m-4 p-4">
+            <div class= <?php
             if ($task->story_point >= 1 && $task->story_point <= 3) { echo 'text-success'; }
             else if ($task->story_point >= 4 && $task->story_point <= 7) { echo 'text-primary';}
             else if (($task->story_point >= 7)) { echo 'text-danger';}
@@ -38,22 +40,37 @@ $this->params['breadcrumbs'][] = $this->title;
                 else if (($task->story_point >= 7)) { echo 'danger';}
                 else if (($task->story_point == 0)) { echo 'укажите story_point';} ?>
             </div></td>
-        <td class="m-4 p-4 border border-black">
-                    <div><?= $task->user->fio ?? $task->user->username; ?></div>
-    </td>
-        <td class="m-4 p-4 border border-black">
-            <div><?= $task->date_end; ?></div>
-            </td>
-        <td class="m-4 p-4 border border-black">
-            <div><?= $task->created_at; ?></div>
-            </td>
+    </tr>
+    <tr>
+        <td class="m-4 p-4">
+            <div>Ответственный</div>
+        </td>
+        <td class="m-4 p-4">
+            <div><?= $task->user->fio ?? $task->user->username; ?></div>
+        </td>
+    </tr>
+    <tr>
+        <td class="m-4 p-4">
+            <div>Дедлайн</div>
+        </td>
+                <td class="m-4 p-4">
+                    <div><?= date('d-m-Y', strtotime($task->date_end)); ?></div>
+                    </td>
+    </tr>
+    <tr>
+        <td class="m-4 p-4">
+            <div>Дата создания</div>
+        </td>
+                <td class="m-4 p-4">
+                    <div><?= date('d-m-Y', strtotime($task->created_at)) ?> </div>
+                    </td>
     </tr>
     </tbody>
 </table>
 
 <div>
     <?php
-    echo Html::a('Обновить задачу', ['task/update/'.$task->id], ['class' => 'btn btn-primary mt-4', 'target' => '_blank']);
+    echo Html::a('Обновить задачу', ['task/update/'.$task->id], ['class' => 'btn btn-primary m-4', 'target' => '_blank']);
     ?>
 </div>
 </div>

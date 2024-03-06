@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'Требуется информация' => 'Требуется информация'
     ]) ?>
 
-    <?= $form->field($task, 'date_end')->textInput(['type' => 'datetime']) ?>
+    <?= $form->field($task, 'date_end')->textInput(['type' => 'date', 'value' => date('Y-m-d', strtotime($task->date_end))]) ?>
 
     <?= $form->field($task, 'story_point')->dropDownList([
         '0' => 'не указано',
@@ -41,7 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
         '10' => '10',
     ]); ?>
 
-    <?= $form->field($task, 'created_at')->textInput(['type' => 'datetime']) ?>
+    <?= $form->field($task, 'created_at')->textInput([
+            'type' => 'date',
+            'value' => date('Y-m-d', strtotime($task->created_at)),
+            'readonly' => true
+    ]) ?>
 
     <div class="form-group d-flex justify-content-between">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success mt-4']) ?>

@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
     '10' => '10',
 ]); ?>
 
-<?= $form->field($task, 'date_end')->textInput(['type' => 'date']); ?>
+<?= $form->field($task, 'date_end', )->textInput(['type' => 'date']); ?>
 
     <div class="form-group d-flex justify-content-between">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
