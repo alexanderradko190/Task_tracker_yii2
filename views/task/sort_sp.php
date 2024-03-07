@@ -22,19 +22,20 @@ $this->params['breadcrumbs'][] = $this->title;
         <tr>
             <td class="p-0 m-0 border border-dark">
 
-                <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
                     ?>
                     <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="height: 70px;">
-                        <?= Html::a($task->name, ['task/'.$task->id], ['class' => 'my-link text-decoration-none fz-18 text-black', 'target' => '_blank']); ?>
+                        <?= Html::a($task->name, ['task/' . $task->id], ['class' => 'my-link text-decoration-none fz-18 text-black', 'target' => '_blank']); ?>
                     </div>
                 <?php
                 endforeach;
                 ?></td>
             <td class="p-0 m-0" style="border: 1px solid black;">
 
-                <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
                     ?>
-                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5"
+                         style="border-bottom: 1px solid black; height: 70px;">
                         <p><?= $task->status; ?></p>
                     </div>
                 <?php
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </td>
             <td class="p-0 m-0 border border-dark">
 
-                <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
                     ?>
                     <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="height: 70px;">
                         <p><?= date('d-m-Y', strtotime($task->date_end)); ?></p>
@@ -53,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?></td>
             <td class="p-0 m-0 border border-dark">
 
-                <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
                     ?>
                     <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="height: 70px;">
                         <p><?= $task->story_point; ?></p>
@@ -63,9 +64,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?></td>
             <td class="p-0 m-0" style="border: 1px solid black;">
 
-                <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
                     ?>
-                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5"
+                         style="border-bottom: 1px solid black; height: 70px;">
                         <p><?= $task->user->fio ?? $task->user->username; ?></p>
                     </div>
                 <?php

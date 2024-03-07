@@ -14,78 +14,92 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::a('Сортировать по дедлайну', ['task/sort-priority'], ['class' => 'mb-5 my-link text-decoration-none fz-18', 'target' => '_blank']) ?>
 </div>
 <div class="tasks-info-page w-80">
-<table class="w-100">
-    <thead>
-    <tr>
-        <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Задача</th>
-        <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Статус</th>
-        <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Дедлайн</th>
-        <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Story point</th>
-        <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Исполнитель</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td class="p-0 m-0 border border-dark">
+    <table class="w-100">
+        <thead>
+        <tr>
+            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                Задача
+            </th>
+            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                Статус
+            </th>
+            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                Дедлайн
+            </th>
+            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                Story point
+            </th>
+            <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">
+                Исполнитель
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="p-0 m-0 border border-dark">
 
-            <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
+                    ?>
+
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="height: 70px;">
+                        <?= Html::a($task->name, ['task/' . $task->id], ['class' => 'my-link text-decoration-none fz-18 text-black', 'target' => '_blank']); ?>
+                    </div>
+                <?php
+                endforeach;
                 ?>
+            </td>
+            <td class="p-0 m-0" style="border: 1px solid black;">
 
-                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="height: 70px;">
-                    <?= Html::a($task->name, ['task/'.$task->id], ['class' => 'my-link text-decoration-none fz-18 text-black', 'target' => '_blank']); ?>
-                </div>
-            <?php
-            endforeach;
-            ?>
-        </td>
-        <td class="p-0 m-0" style="border: 1px solid black;">
-
-            <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
+                    ?>
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5"
+                         style="border-bottom: 1px solid black; height: 70px;">
+                        <p><?= $task->status; ?></p>
+                    </div>
+                <?php
+                endforeach;
                 ?>
-                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
-                    <p><?= $task->status; ?></p>
-                </div>
-            <?php
-            endforeach;
-            ?>
-        </td>
-        <td class="p-0 m-0" style="border: 1px solid black;">
+            </td>
+            <td class="p-0 m-0" style="border: 1px solid black;">
 
-            <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
+                    ?>
+
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5"
+                         style="border-bottom: 1px solid black; height: 70px;">
+                        <p><?= date('d-m-Y', strtotime($task->date_end)); ?></p>
+                    </div>
+                <?php
+                endforeach;
                 ?>
+            </td>
+            <td class="p-0 m-0" style="border: 1px solid black;">
 
-                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
-                    <p><?= date('d-m-Y', strtotime($task->date_end)); ?></p>
-                </div>
-            <?php
-            endforeach;
-            ?>
-        </td>
-        <td class="p-0 m-0" style="border: 1px solid black;">
-
-            <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
+                    ?>
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5"
+                         style="border-bottom: 1px solid black; height: 70px;">
+                        <p><?= $task->story_point; ?></p>
+                    </div>
+                <?php
+                endforeach;
                 ?>
-                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
-                    <p><?= $task->story_point; ?></p>
-                </div>
-            <?php
-            endforeach;
-            ?>
-        </td>
-        <td class="p-0 m-0" style="border: 1px solid black;">
+            </td>
+            <td class="p-0 m-0" style="border: 1px solid black;">
 
-            <?php foreach($tasks as $task):
+                <?php foreach ($tasks as $task):
+                    ?>
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5"
+                         style="border-bottom: 1px solid black; height: 70px;">
+                        <p><?= $task->user->fio ?? $task->user->username; ?></p>
+                    </div>
+                <?php
+                endforeach;
                 ?>
-                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
-                    <p><?= $task->user->fio ?? $task->user->username; ?></p>
-                </div>
-            <?php
-            endforeach;
-            ?>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <script>

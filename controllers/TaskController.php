@@ -96,7 +96,7 @@ class TaskController extends \yii\web\Controller
 
             if ($ratio_sp->d >= 1) {
                 $task->story_point = max(0, $task->story_point - $ratio_sp->d);
-                $task->story_point = (string) $task->story_point;
+                $task->story_point = (string)$task->story_point;
             }
 
             $nameError = $this->validateText($task->name);

@@ -52,11 +52,13 @@ class WorkerModel extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getTasks() {
+    public function getTasks()
+    {
         return $this->hasMany(TaskModel::class, ['id' => 'tasks_id'])->viaTable('tasks_workers', ['workers_id' => 'id']);
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         return $this->hasOne(User::class, ['workers_id' => 'id']);
     }
 

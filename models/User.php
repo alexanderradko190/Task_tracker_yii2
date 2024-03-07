@@ -38,29 +38,6 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            [['username', 'email', 'password_hash'], 'required'],
-            [['username', 'email'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
@@ -88,6 +65,29 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['username', 'email', 'password_hash'], 'required'],
+            [['username', 'email'], 'string', 'max' => 255],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getId()
     {
         return $this->getPrimaryKey();
@@ -96,17 +96,17 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function getAuthKey()
+    public function validateAuthKey($authKey)
     {
-        return $this->auth_key;
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
      * @inheritdoc
      */
-    public function validateAuthKey($authKey)
+    public function getAuthKey()
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->auth_key;
     }
 
     /**

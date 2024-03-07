@@ -20,9 +20,9 @@ class InfoController extends \yii\web\Controller
 
     public function actionIndex()
     {
-         if (Yii::$app->user->isGuest) {
-             return $this->redirect(['/site/login']);
-         }
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
 
         $tasks = $this->taskRepository->getUnresolvedTasksBySort();
         $workers = $this->userRepository->getWorkersByRating();
