@@ -24,7 +24,7 @@ class InfoController extends \yii\web\Controller
              return $this->redirect(['/site/login']);
          }
 
-        $tasks = $this->taskRepository->getUnresolvedTasks();
+        $tasks = $this->taskRepository->getUnresolvedTasksBySort();
         $workers = $this->userRepository->getWorkersByRating();
 
         return $this->render('index', [

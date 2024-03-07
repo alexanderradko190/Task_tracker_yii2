@@ -4,7 +4,7 @@ namespace app\repositories;
 
 interface TaskRepositoryInterface
 {
-    public function getUnresolvedTasks(): array;
+    public function getUnresolvedTasksBySort(): array;
     public function getTaskById(string $id): object;
     public function getAllTasks(): array;
     public function getTasksByStoryPoint(): array;

@@ -6,9 +6,9 @@ use app\models\TaskModel;
 
 class TaskRepository implements TaskRepositoryInterface
 {
-    public function getUnresolvedTasks(): array
+    public function getUnresolvedTasksBySort(): array
     {
-        return TaskModel::find()->where(['not', ['status' => 'Решена']])->orderBy(['updated_at' => SORT_DESC])->all();
+        return TaskModel::find()->where(['not', ['status' => TaskModel::IS_READY]])->orderBy(['updated_at' => SORT_DESC])->all();
     }
 
     public function getTaskById(string $id): object

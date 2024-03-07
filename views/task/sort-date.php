@@ -12,8 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <thead>
         <tr>
             <th class="border border-dark pt-3 pb-3 ps-5">Задача</th>
+            <th class="border border-dark pt-3 pb-3 ps-5">Статус</th>
             <th class="border border-dark pt-3 pb-3 ps-5">Дедлайн</th>
             <th class="border border-dark pt-3 pb-3 ps-5">Story point</th>
+            <th class="border border-dark pt-3 pb-3 ps-5">Исполнитель</th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +34,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php foreach($tasks as $task):
                     ?>
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
+                        <p><?= $task->status; ?></p>
+                    </div>
+                <?php
+                endforeach;
+                ?>
+            </td>
+            <td class="p-0 m-0" style="border: 1px solid black;">
+
+                <?php foreach($tasks as $task):
+                    ?>
                     <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5">
                         <p><?= date('d-m-Y', strtotime($task->date_end)); ?></p>
                     </div>
@@ -44,6 +57,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                     <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5">
                         <p><?= $task->story_point; ?></p>
+                    </div>
+                <?php
+                endforeach;
+                ?></td>
+            <td class="p-0 m-0" style="border: 1px solid black;">
+
+                <?php foreach($tasks as $task):
+                    ?>
+                    <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
+                        <p><?= $task->user->fio ?? $task->user->username; ?></p>
                     </div>
                 <?php
                 endforeach;

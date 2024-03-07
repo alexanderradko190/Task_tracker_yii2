@@ -18,8 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <thead>
     <tr>
         <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Задача</th>
+        <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Статус</th>
         <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Дедлайн</th>
         <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Story point</th>
+        <th style="border: 1px solid black; height: 70px; padding-top: 1rem; padding-bottom: 1rem; padding-left: 3rem;">Исполнитель</th>
     </tr>
     </thead>
     <tbody>
@@ -34,7 +36,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             <?php
             endforeach;
-            ?></td>
+            ?>
+        </td>
+        <td class="p-0 m-0" style="border: 1px solid black;">
+
+            <?php foreach($tasks as $task):
+                ?>
+                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
+                    <p><?= $task->status; ?></p>
+                </div>
+            <?php
+            endforeach;
+            ?>
+        </td>
         <td class="p-0 m-0" style="border: 1px solid black;">
 
             <?php foreach($tasks as $task):
@@ -45,7 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             <?php
             endforeach;
-            ?></td>
+            ?>
+        </td>
         <td class="p-0 m-0" style="border: 1px solid black;">
 
             <?php foreach($tasks as $task):
@@ -55,7 +70,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             <?php
             endforeach;
-            ?></td>
+            ?>
+        </td>
+        <td class="p-0 m-0" style="border: 1px solid black;">
+
+            <?php foreach($tasks as $task):
+                ?>
+                <div class="task-name m-0 border-bottom border-dark pt-3 pb-3 ps-5" style="border-bottom: 1px solid black; height: 70px;">
+                    <p><?= $task->user->fio ?? $task->user->username; ?></p>
+                </div>
+            <?php
+            endforeach;
+            ?>
+        </td>
     </tr>
     </tbody>
 </table>

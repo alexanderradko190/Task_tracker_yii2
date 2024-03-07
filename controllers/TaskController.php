@@ -6,6 +6,7 @@ use app\models\TaskModel;
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
 use app\traits\CreateValidationTrait;
+use DateTime;
 use Yii;
 
 class TaskController extends \yii\web\Controller
@@ -88,6 +89,15 @@ class TaskController extends \yii\web\Controller
         $task = $this->taskRepository->getTaskById($id);
 
         if ($task->load(Yii::$app->request->post())) {
+
+            $now = new DateTime();
+            $deadline = new DateTime($task->date_end);
+            $ratio_sp = $deadline->diff($now);
+
+            if ($ratio_sp->d >= 1) {
+                $task->story_point = max(0, $task->story_point - $ratio_sp->d);
+                $task->story_point = (string) $task->story_point;
+            }
 
             $nameError = $this->validateText($task->name);
             $descriptionError = $this->validateText($task->description);

@@ -13,6 +13,7 @@ namespace app\models;
  */
 class TaskModel extends \yii\db\ActiveRecord
 {
+    const IS_READY = 'Решена';
 
     /**
      * {@inheritdoc}
@@ -28,7 +29,7 @@ class TaskModel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'date_end'], 'required'],
             [['name'], 'string', 'max' => 120],
             [['date_end', 'created_at', 'updated_at', 'user_id'], 'safe'],
             [['name', 'description', 'status', 'story_point'], 'string', 'max' => 255],
@@ -42,6 +43,7 @@ class TaskModel extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'user_id' => 'ID исполнителя',
             'name' => 'Название задачи',
             'description' => 'Описание задачи',
             'date_end' => 'Дедлайн',
@@ -56,7 +58,7 @@ class TaskModel extends \yii\db\ActiveRecord
     {
         parent::afterSave($insert, $changedAttributes);
 
-        if ($this->status == 'Решена' && $this->user_id) {
+        if ($this->status === self::IS_READY && $this->user_id) {
             $workerRating = WorkersRatingModel::findOne(['worker_id' => $this->user_id]);
             if (!$workerRating) {
                 $workerRating = new WorkersRatingModel();

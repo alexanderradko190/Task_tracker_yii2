@@ -1,4 +1,6 @@
 <?php
+
+use app\models\TaskModel;
 use yii\helpers\Html;
 
 $this->title = $task->name;
@@ -30,15 +32,34 @@ $this->params['breadcrumbs'][] = $task->name;
         </td>
         <td class="m-4 p-4">
             <div class= <?php
-            if ($task->story_point >= 1 && $task->story_point <= 3) { echo 'text-success'; }
-            else if ($task->story_point >= 4 && $task->story_point <= 7) { echo 'text-primary';}
-            else if (($task->story_point >= 7)) { echo 'text-danger';}
-            else if (($task->story_point == 0)) { echo 'text-secondary';} ?>
+            if ($task->status === TaskModel::IS_READY) {
+                 echo 'text-black';
+                } else {
+                if (($task->story_point >= 1 && $task->story_point <= 3) && TaskModel::IS_READY) {
+                    echo 'text-success';
+                } else if ($task->story_point >= 4 && $task->story_point <= 7) {
+                    echo 'text-primary';
+                } else if (($task->story_point >= 7)) {
+                    echo 'text-danger';
+                } else if (($task->story_point == 0)) {
+                    echo 'text-secondary';
+                }
+            } ?>
         ">
-                <?php if ($task->story_point >= 1 && $task->story_point <= 3) { echo 'success'; }
-                else if ($task->story_point >= 4 && $task->story_point <= 7) { echo 'primary';}
-                else if (($task->story_point >= 7)) { echo 'danger';}
-                else if (($task->story_point == 0)) { echo 'укажите story_point';} ?>
+                <?php
+                if ($task->status === TaskModel::IS_READY) {
+                       echo 'задача закрыта';
+                    } else {
+                    if ($task->story_point >= 1 && $task->story_point <= 3) {
+                        echo 'success';
+                    } else if ($task->story_point >= 4 && $task->story_point <= 7) {
+                        echo 'primary';
+                    } else if (($task->story_point >= 7)) {
+                        echo 'danger';
+                    } else if (($task->story_point == 0)) {
+                        echo 'укажите story_point';
+                    }
+                } ?>
             </div></td>
     </tr>
     <tr>
