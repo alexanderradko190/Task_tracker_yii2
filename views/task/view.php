@@ -90,9 +90,12 @@ $this->params['breadcrumbs'][] = $task->name;
         </tbody>
     </table>
 
-    <div>
+    <div class="d-flex flex-column w-50">
         <?php
-        echo Html::a('Обновить задачу', ['task/update/' . $task->id], ['class' => 'btn btn-primary m-4', 'target' => '_blank']);
+        echo Html::a('Обновить задачу', ['task/update/' . $task->id], ['class' => 'btn btn-primary m-4 align-items-center', 'target' => '_blank']);
+        ?>
+        <?php
+        echo Html::a('К списку задач', ['/'], ['class' => 'btn btn-success m-4 align-items-center', 'target' => '_blank']);
         ?>
     </div>
 </div>

@@ -12,4 +12,5 @@ interface TaskRepositoryInterface
     public function getTasksByDate(): array;
     public function getTaskAndUserData(): array;
     public function getAllTasksById(): array;
+    public function ratingСalculation ($task): string;
 }

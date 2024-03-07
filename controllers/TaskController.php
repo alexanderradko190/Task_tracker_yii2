@@ -90,14 +90,7 @@ class TaskController extends \yii\web\Controller
 
         if ($task->load(Yii::$app->request->post())) {
 
-            $now = new DateTime();
-            $deadline = new DateTime($task->date_end);
-            $ratio_sp = $deadline->diff($now);
-
-            if ($ratio_sp->d >= 1) {
-                $task->story_point = max(0, $task->story_point - $ratio_sp->d);
-                $task->story_point = (string)$task->story_point;
-            }
+            $this->taskRepository->ratingСalculation($task);
 
             $nameError = $this->validateText($task->name);
             $descriptionError = $this->validateText($task->description);
