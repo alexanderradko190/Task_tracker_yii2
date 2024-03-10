@@ -4,9 +4,15 @@ namespace app\repositories;
 
 use app\models\TaskModel;
 use DateTime;
+use yii\db\ActiveQuery;
 
 class TaskRepository implements TaskRepositoryInterface
 {
+    private $query;
+    public function __construct()
+    {
+        $this->query = TaskModel::find()->with(['user']);
+    }
     public function getUnresolvedTasksBySort(): array
     {
         return TaskModel::find()->where(['not', ['status' => TaskModel::IS_READY]])->orderBy(['updated_at' => SORT_DESC])->all();
@@ -19,22 +25,7 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function getAllTasks(): array
     {
-        return TaskModel::find()->orderBy(['updated_at' => SORT_DESC])->all();
-    }
-
-    public function getTasksByStoryPoint(): array
-    {
-        return TaskModel::find()->orderBy(['story_point' => SORT_ASC])->all();
-    }
-
-    public function getTasksByPriority(): array
-    {
-        return TaskModel::find()->orderBy(['date_end' => SORT_ASC])->all();
-    }
-
-    public function getTasksByDate(): array
-    {
-        return TaskModel::find()->orderBy(['id' => SORT_DESC])->all();
+        return $this->query->orderBy(['updated_at' => SORT_DESC])->asArray()->all();
     }
 
     public function getTaskAndUserData(): array
@@ -52,6 +43,11 @@ class TaskRepository implements TaskRepositoryInterface
         return TaskModel::find()
             ->select(['name', 'status', 'date_end', 'story_point'])
             ->orderBy('id')->all();
+    }
+
+    public function filterByStatus($status): ActiveQuery
+    {
+        return $this->query->where(['status' => $status]);
     }
 
     public function ratingСalculation($task): string

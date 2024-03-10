@@ -13,6 +13,12 @@ namespace app\models;
  */
 class TaskModel extends \yii\db\ActiveRecord
 {
+    const IS_NEW = 'Новая';
+    const AT_WORK = 'В работе';
+    const ON_REVIEW = 'На ревью';
+    const IN_TEST = 'В тестировании';
+    const READY_TO_RELEASE = 'Готова к релизу';
+    const NEED_INFO = 'Требует информации';
     const IS_READY = 'Решена';
 
     /**

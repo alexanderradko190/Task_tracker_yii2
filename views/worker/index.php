@@ -46,8 +46,25 @@ foreach ($workers as $user): ?>
 
                 ?>
                 <ul class="list-unstyled w-50">
-                    <li class="m-2 p-2 fz-18 rounded-3<?php if ($now > $deadline) { ?> border border-opacity-25 border-danger border-3 <?php } else { ?> border border-dark border-1 <?php } ?>">
-                        <?= Html::a($task->name, ['task/' . $task->id], ['class' => 'text-primary my-link text-decoration-none', 'target' => '_blank']); ?>
+                    <li class="m-2 p-2 fz-18 rounded-3 border border-opacity-50 border-3 <?php if ($now > $deadline) { ?> border-danger
+                    <?php }
+                    else if ($task->status === TaskModel::IS_NEW || $task->status === TaskModel::IS_READY) { ?> border-success <?php }
+                    else if ($task->status === TaskModel::AT_WORK || $task->status === TaskModel::IN_TEST) { ?> border-primary <?php }
+                    else if ($task->status === TaskModel::ON_REVIEW || $task->status === TaskModel::READY_TO_RELEASE || TaskModel::NEED_INFO) { ?> border-warning <?php }
+                    ?>">
+                        <?= Html::a($task->name, ['task/update/' . $task->id], ['class' => 'text-primary my-link text-decoration-none', 'target' => '_blank']); ?>
+                        <div class="mt-3 d-flex flex-row justify-content-between">
+                            Статус
+                            <div>
+                                <span><?= $task->status; ?></span>
+                            </div>
+                        </div>
+                        <div class="mt-3 d-flex flex-row justify-content-between">
+                            Story_point
+                            <div>
+                                <span><?= $task->story_point; ?></span>
+                            </div>
+                        </div>
                         <?php if ($now >= $deadline) { ?>
                             <div class="mt-3 text-danger d-flex flex-row justify-content-between">
                                 Просрочена на
@@ -61,30 +78,12 @@ foreach ($workers as $user): ?>
                             <div class="mt-3 text-success d-flex flex-row justify-content-between">
                                 На выполнение осталось
                                 <div>
-                                    <?= $daysT; ?> д
+                                    <?php echo $daysT ? '<span>' . $daysT . '</span> д' : ''; ?>
                                     <?= $hoursT; ?> ч
                                     <?= $minutesT; ?> мин
                                 </div>
                             </div>
                         <?php } ?>
-                        <div class="mt-3 d-flex flex-row justify-content-between">
-                            Дедлайн
-                            <div>
-                                <?= date('d-m-Y', strtotime($task->date_end)); ?>
-                            </div>
-                        </div>
-                        <div class="mt-3 d-flex flex-row justify-content-between">
-                            Статус
-                            <div>
-                                <span><?= $task->status; ?></span>
-                            </div>
-                        </div>
-                        <div class="mt-3 d-flex flex-row justify-content-between">
-                            Story_point
-                            <div>
-                                <span><?= $task->story_point; ?></span>
-                            </div>
-                        </div>
                     </li>
                 </ul>
             <?php } endforeach; ?>

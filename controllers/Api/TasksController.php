@@ -21,4 +21,11 @@ class TasksController extends Controller
 
         return $tasks;
     }
+
+    public function actionTaskStatus()
+    {
+        $tasks = $this->taskRepository->getAllTasks();
+
+        return $tasks;
+    }
 }

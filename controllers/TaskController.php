@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\controllers\api\TasksController;
 use app\models\TaskModel;
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
@@ -17,7 +18,7 @@ class TaskController extends \yii\web\Controller
     private $taskRepository;
     private $userRepository;
 
-    public function __construct($id, $module, TaskRepository $taskRepository, UserRepository $userRepository, $config = [])
+    public function __construct($id, $module, TaskRepository $taskRepository, UserRepository $userRepository, TasksController $tasks, $config = [])
     {
         $this->taskRepository = $taskRepository;
         $this->userRepository = $userRepository;
@@ -30,13 +31,21 @@ class TaskController extends \yii\web\Controller
             return $this->redirect(['/site/login']);
         }
 
-        $tasks = $this->taskRepository->getAllTasks();
+        $status = Yii::$app->request->get('status');
+
+        $tasks = $this->taskRepository;
         $workers = $this->userRepository->getAllUsers();
 
-        return $this->render('index', [
-            'tasks' => $tasks,
-            'workers' => $workers,
-        ]);
+        if ($status) {
+            if ($status === '*') {
+                return $this->asJson($tasks->getAllTasks());
+            }
+            return $this->asJson($tasks->filterByStatus($status)->asArray()->all());
+        }
+            return $this->render('index', [
+                'tasksByStatus' => $tasks->getAllTasks(),
+                'workers' => $workers,
+            ]);
     }
 
     public function actionView($id)
@@ -110,43 +119,95 @@ class TaskController extends \yii\web\Controller
         ]);
     }
 
-    public function actionSortSp()
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
+//    public function actionNew()
+//    {
+//        if (Yii::$app->user->isGuest) {
+//            return $this->redirect(['/site/login']);
+//        }
+//
+//        $tasks = $this->taskRepository->getTasksNew();
+//
+//        return $this->render('new', [
+//            'tasks' => $tasks,
+//        ]);
+//    }
 
-        $tasks = $this->taskRepository->getTasksByStoryPoint();
-
-        return $this->render('sort_sp', [
-            'tasks' => $tasks,
-        ]);
-    }
-
-    public function actionSortPriority()
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
-
-        $tasks = $this->taskRepository->getTasksByPriority();
-
-        return $this->render('sort_priority', [
-            'tasks' => $tasks,
-        ]);
-    }
-
-    public function actionSortDate()
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
-
-        $tasks = $this->taskRepository->getTasksByDate();
-
-        return $this->render('sort_priority', [
-            'tasks' => $tasks,
-        ]);
-    }
+//    public function actionAtwork()
+//    {
+//        if (Yii::$app->user->isGuest) {
+//            return $this->redirect(['/site/login']);
+//        }
+//
+//        $tasks = $this->taskRepository->getTasksAtWork();
+//
+//        return $this->render('atwork', [
+//            'tasks' => $tasks,
+//        ]);
+//    }
+//
+//    public function actionReview()
+//    {
+//        if (Yii::$app->user->isGuest) {
+//            return $this->redirect(['/site/login']);
+//        }
+//
+//        $tasks = $this->taskRepository->getTasksReview();
+//
+//        return $this->render('review', [
+//            'tasks' => $tasks,
+//        ]);
+//    }
+//
+//    public function actionIntest()
+//    {
+//        if (Yii::$app->user->isGuest) {
+//            return $this->redirect(['/site/login']);
+//        }
+//
+//        $tasks = $this->taskRepository->getTasksInTest();
+//
+//        return $this->render('intest', [
+//            'tasks' => $tasks,
+//        ]);
+//    }
+//
+//    public function actionReadytorelease()
+//    {
+//        if (Yii::$app->user->isGuest) {
+//            return $this->redirect(['/site/login']);
+//        }
+//
+//        $tasks = $this->taskRepository->getTasksReadyToRelease();
+//
+//        return $this->render('readytorelease', [
+//            'tasks' => $tasks,
+//        ]);
+//    }
+//
+//    public function actionNeedinfo()
+//    {
+//        if (Yii::$app->user->isGuest) {
+//            return $this->redirect(['/site/login']);
+//        }
+//
+//        $tasks = $this->taskRepository->getTasksNeedInfo();
+//
+//        return $this->render('needinfo', [
+//            'tasks' => $tasks,
+//        ]);
+//    }
+//
+//    public function actionIsReady()
+//    {
+//        if (Yii::$app->user->isGuest) {
+//            return $this->redirect(['/site/login']);
+//        }
+//
+//        $tasks = $this->taskRepository->getTasksByDate();
+//
+//        return $this->render('is_ready', [
+//            'tasks' => $tasks,
+//        ]);
+//    }
 
 }
