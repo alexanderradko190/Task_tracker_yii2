@@ -4,10 +4,10 @@ namespace app\controllers;
 
 use app\controllers\api\TasksController;
 use app\models\TaskModel;
+use app\models\User;
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
 use app\traits\CreateValidationTrait;
-use DateTime;
 use Yii;
 
 class TaskController extends \yii\web\Controller
@@ -42,10 +42,10 @@ class TaskController extends \yii\web\Controller
             }
             return $this->asJson($tasks->filterByStatus($status)->asArray()->all());
         }
-            return $this->render('index', [
-                'tasksByStatus' => $tasks->getAllTasks(),
-                'workers' => $workers,
-            ]);
+        return $this->render('index', [
+            'tasksByStatus' => $tasks->getAllTasks(),
+            'workers' => $workers,
+        ]);
     }
 
     public function actionView($id)
@@ -96,13 +96,17 @@ class TaskController extends \yii\web\Controller
         }
 
         $task = $this->taskRepository->getTaskById($id);
+        $workers = User::find()->all();
+        $currentWorker = User::findOne($task->user_id);
 
         if ($task->load(Yii::$app->request->post())) {
 
             $this->taskRepository->ratingСalculation($task);
 
             $nameError = $this->validateText($task->name);
+
             $descriptionError = $this->validateText($task->description);
+
             if ($nameError === false) {
                 $task->addError('name', 'Название задачи может содержать только буквы или цифры');
             } else if ($descriptionError === false) {
@@ -116,98 +120,9 @@ class TaskController extends \yii\web\Controller
 
         return $this->render('update', [
             'task' => $task,
+            'workers' => $workers,
+            'currentWorker' => $currentWorker,
         ]);
     }
-
-//    public function actionNew()
-//    {
-//        if (Yii::$app->user->isGuest) {
-//            return $this->redirect(['/site/login']);
-//        }
-//
-//        $tasks = $this->taskRepository->getTasksNew();
-//
-//        return $this->render('new', [
-//            'tasks' => $tasks,
-//        ]);
-//    }
-
-//    public function actionAtwork()
-//    {
-//        if (Yii::$app->user->isGuest) {
-//            return $this->redirect(['/site/login']);
-//        }
-//
-//        $tasks = $this->taskRepository->getTasksAtWork();
-//
-//        return $this->render('atwork', [
-//            'tasks' => $tasks,
-//        ]);
-//    }
-//
-//    public function actionReview()
-//    {
-//        if (Yii::$app->user->isGuest) {
-//            return $this->redirect(['/site/login']);
-//        }
-//
-//        $tasks = $this->taskRepository->getTasksReview();
-//
-//        return $this->render('review', [
-//            'tasks' => $tasks,
-//        ]);
-//    }
-//
-//    public function actionIntest()
-//    {
-//        if (Yii::$app->user->isGuest) {
-//            return $this->redirect(['/site/login']);
-//        }
-//
-//        $tasks = $this->taskRepository->getTasksInTest();
-//
-//        return $this->render('intest', [
-//            'tasks' => $tasks,
-//        ]);
-//    }
-//
-//    public function actionReadytorelease()
-//    {
-//        if (Yii::$app->user->isGuest) {
-//            return $this->redirect(['/site/login']);
-//        }
-//
-//        $tasks = $this->taskRepository->getTasksReadyToRelease();
-//
-//        return $this->render('readytorelease', [
-//            'tasks' => $tasks,
-//        ]);
-//    }
-//
-//    public function actionNeedinfo()
-//    {
-//        if (Yii::$app->user->isGuest) {
-//            return $this->redirect(['/site/login']);
-//        }
-//
-//        $tasks = $this->taskRepository->getTasksNeedInfo();
-//
-//        return $this->render('needinfo', [
-//            'tasks' => $tasks,
-//        ]);
-//    }
-//
-//    public function actionIsReady()
-//    {
-//        if (Yii::$app->user->isGuest) {
-//            return $this->redirect(['/site/login']);
-//        }
-//
-//        $tasks = $this->taskRepository->getTasksByDate();
-//
-//        return $this->render('is_ready', [
-//            'tasks' => $tasks,
-//        ]);
-//    }
 
 }

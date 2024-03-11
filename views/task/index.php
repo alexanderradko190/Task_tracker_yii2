@@ -9,32 +9,49 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="tasks-info-page w-80">
-    <div class="show-menu d-inline-block">
+    <div class="show-menu d-inline-block fs-5">
         Сортировка по статусам
     </div>
     <ul class="hide-block list-unstyled">
         <li class="mb-1">
-            <a href="<?= Url::to(['/?status=Новая']) ?>" class="my-link text-dark text-decoration-none" data-status="new">Новая</a>
+            <a href="<?= Url::to(['/?status=Новая']) ?>" class="my-link text-dark text-decoration-none">
+                Новая
+            </a>
         </li>
         <li class="mb-1">
-            <a href="<?= Url::to(['/?status=В работе']) ?>" class="my-link text-dark text-decoration-none" data-status="atwork">В работе</a>
+            <a href="<?= Url::to(['/?status=В работе']) ?>" class="my-link text-dark text-decoration-none">
+                В работе
+            </a>
         </li>
         <li class="mb-1">
-            <a href="<?= Url::to(['/?status=На ревью']) ?>" class="my-link text-dark text-decoration-none" data-status="review">На ревью</a>
+            <a href="<?= Url::to(['/?status=На ревью']) ?>" class="my-link text-dark text-decoration-none">
+                На ревью
+            </a>
         </li>
         <li class="mb-1">
-            <a href="<?= Url::to(['/?status=В тестировании']) ?>" class="my-link text-dark text-decoration-none" data-status="intest">В тестировании</a>
+            <a href="<?= Url::to(['/?status=В тестировании']) ?>" class="my-link text-dark text-decoration-none">
+                В тестировании
+            </a>
         </li>
         <li class="mb-1">
-            <a href="<?= Url::to(['/?status=Готова к релизу']) ?>" class="my-link text-dark text-decoration-none" data-status="readytorelease">Готова к релизу</a>
+            <a href="<?= Url::to(['/?status=Готова к релизу']) ?>" class="my-link text-dark text-decoration-none">
+                Готова к релизу
+            </a>
         </li>
         <li class="mb-1">
-            <a href="<?= Url::to(['/?status=Требуется информация']) ?>" class="my-link text-dark text-decoration-none" data-status="needinfo">Требуется информация</a>
+            <a href="<?= Url::to(['/?status=Решена']) ?>" class="my-link text-dark text-decoration-none">
+                Решена
+            </a>
+        </li>
+        <li class="mb-1">
+            <a href="<?= Url::to(['/?status=Требуется информация']) ?>" class="my-link text-dark text-decoration-none">Требуется
+                информация
+            </a>
         </li>
     </ul>
     <table class="w-100 mt-4">
         <thead>
-        <tr>
+        <tr style="height: 38px;">
             <th style="width: 30%;">
                 Задача
             </th>
@@ -58,29 +75,40 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <style>
-    table {
-        position: relative;
-    }
     #main.flex-shrink-0 {
         height: 0;
     }
+
     .show-menu {
         cursor: pointer;
         margin-top: 25px;
-        margin-bottom: 50px;
+        margin-bottom: 0;
     }
+
     .hide-block {
-        position: fixed;
         background: #ffffff;
-        padding: 15px;
-        width: 250px;
-        box-shadow: 0 0 3px rgba(128, 128, 128, 0.5);
+        padding-top: 15px;
+        width: 100%;
         border-radius: 7px;
-        top: 150px;
-        left: 80px;
         display: none;
-        z-index: 1000;
-        margin-top: 10px;
+        z-index: 999;
+    }
+
+    #empty-list {
+        width: 100%;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .row.text-muted {
+        display: none;
     }
 </style>
 
@@ -143,7 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
             .catch(error => console.error('Ошибка:', error));
 
         var links = document.querySelectorAll('.hide-block a');
-        links.forEach(function(link) {
+        links.forEach(function (link) {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 var status = e.target.dataset.status;
@@ -235,11 +263,11 @@ $this->params['breadcrumbs'][] = $this->title;
         });
 
         var targetLinks = document.querySelectorAll('a.text-dark');
-        targetLinks.forEach(function(targetLink) {
+        targetLinks.forEach(function (targetLink) {
             targetLink.addEventListener('click', function (event) {
                 event.preventDefault();
                 // Удаляем классы у всех ссылок
-                targetLinks.forEach(function(targetLink) {
+                targetLinks.forEach(function (targetLink) {
                     targetLink.classList.remove('text-primary');
                     targetLink.classList.add('text-dark');
                 });

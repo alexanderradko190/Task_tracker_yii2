@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -46,6 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => date('Y-m-d', strtotime($task->created_at)),
                 'readonly' => true
             ]) ?>
+
+            <?= $form->field($task, 'user_id')->dropDownList(ArrayHelper::map($workers, 'id', 'username'), ['options' => [$currentWorker->id => ['selected' => true]]]) ?>
 
             <div class="form-group d-flex justify-content-between">
                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success mt-4']) ?>

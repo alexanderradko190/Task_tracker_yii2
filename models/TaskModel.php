@@ -49,7 +49,7 @@ class TaskModel extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'ID исполнителя',
+            'user_id' => 'Исполнитель',
             'name' => 'Название задачи',
             'description' => 'Описание задачи',
             'date_end' => 'Дедлайн',
