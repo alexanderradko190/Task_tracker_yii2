@@ -11,6 +11,5 @@ interface TaskRepositoryInterface
     public function getAllTasks(): array;
     public function getTaskAndUserData(): array;
     public function getAllTasksById(): array;
-    public function ratingСalculation ($task): string;
     public function filterByStatus($status): ActiveQuery;
 }

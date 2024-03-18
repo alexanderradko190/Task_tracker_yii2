@@ -7,6 +7,7 @@ use app\models\TaskModel;
 use app\models\User;
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
+use app\services\RatingService;
 use app\traits\CreateValidationTrait;
 use Yii;
 
@@ -16,12 +17,14 @@ class TaskController extends \yii\web\Controller
 
     public $tasks;
     private $taskRepository;
+    private $ratingService;
     private $userRepository;
 
-    public function __construct($id, $module, TaskRepository $taskRepository, UserRepository $userRepository, TasksController $tasks, $config = [])
+    public function __construct($id, $module, TaskRepository $taskRepository, UserRepository $userRepository, TasksController $tasks, RatingService $ratingService, $config = [])
     {
         $this->taskRepository = $taskRepository;
         $this->userRepository = $userRepository;
+        $this->ratingService = $ratingService;
         parent::__construct($id, $module, $config);
     }
 
@@ -68,7 +71,7 @@ class TaskController extends \yii\web\Controller
         $task = new TaskModel();
 
         $task->user_id = Yii::$app->user->id;
-        if ($task->load(Yii::$app->request->post())) {
+        if ($task->load(Yii::$app->request->post()) && $task->validate()) {
             $nameError = $this->validateText($task->name);
             $descriptionError = $this->validateText($task->description);
             if ($nameError === false) {
@@ -99,9 +102,9 @@ class TaskController extends \yii\web\Controller
         $workers = User::find()->all();
         $currentWorker = User::findOne($task->user_id);
 
-        if ($task->load(Yii::$app->request->post())) {
+        if ($task->load(Yii::$app->request->post()) && $task->validate()) {
 
-            $this->taskRepository->ratingСalculation($task);
+            $this->ratingService->ratingCalculation($task);
 
             $nameError = $this->validateText($task->name);
 
