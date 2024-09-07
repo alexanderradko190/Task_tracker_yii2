@@ -3,13 +3,15 @@
 namespace app\models;
 
 /**
- * This is the model class for table "tasks".
+ * Tasks
  *
  * @property int $id
  * @property string $name
  * @property string|null $date_end
  * @property string|null $created_at
  * @property string|null $updated_at
+ * @property string|null $description
+ * @property int|null $user_id
  */
 class TaskModel extends \yii\db\ActiveRecord
 {
@@ -21,9 +23,20 @@ class TaskModel extends \yii\db\ActiveRecord
     const NEED_INFO = 'Требует информации';
     const IS_READY = 'Решена';
 
-    /**
-     * {@inheritdoc}
-     */
+//    private string $name = '';
+//    private string $description = '';
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+  //**************** ActiveRecord ************************//
     public static function tableName()
     {
         return 'tasks';
@@ -59,6 +72,11 @@ class TaskModel extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+    public function beforeSave($insert)
+    {
+        return parent::beforeSave($insert);
+    }
+
 
     public function afterSave($insert, $changedAttributes)
     {
@@ -73,6 +91,13 @@ class TaskModel extends \yii\db\ActiveRecord
             $workerRating->rating += $this->story_point;
             $workerRating->save();
         }
+    }
+
+    public function afterFind()
+    {
+        $this->description = $this->getAttribute('description');
+
+        parent::afterFind();
     }
 
     public function getUser()

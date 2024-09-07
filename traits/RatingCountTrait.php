@@ -1,11 +1,10 @@
 <?php
 
-namespace app\services;
+namespace app\traits;
 
-use app\models\TaskModel;
 use DateTime;
 
-class RatingService implements RatingServiceInterface
+trait RatingCountTrait
 {
     public function ratingCalculation($task): string
     {

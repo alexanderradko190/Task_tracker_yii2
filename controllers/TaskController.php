@@ -2,123 +2,101 @@
 
 namespace app\controllers;
 
-use app\controllers\api\TasksController;
 use app\models\TaskModel;
-use app\models\User;
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
-use app\services\RatingService;
-use app\traits\CreateValidationTrait;
+use app\services\TaskService;
 use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 
-class TaskController extends \yii\web\Controller
+class TaskController extends Controller
 {
-    use CreateValidationTrait;
+    private TaskRepository $tasks;
+    private UserRepository $users;
+    private TaskService $taskService;
 
-    public $tasks;
-    private $taskRepository;
-    private $ratingService;
-    private $userRepository;
-
-    public function __construct($id, $module, TaskRepository $taskRepository, UserRepository $userRepository, TasksController $tasks, RatingService $ratingService, $config = [])
-    {
-        $this->taskRepository = $taskRepository;
-        $this->userRepository = $userRepository;
-        $this->ratingService = $ratingService;
+    public function __construct(
+        $id,
+        $module,
+        TaskRepository $tasks,
+        UserRepository $users,
+        TaskService $taskService,
+        $config = []
+    ) {
+        $this->tasks = $tasks;
+        $this->users = $users;
+        $this->taskService = $taskService;
         parent::__construct($id, $module, $config);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+                'denyCallback' => function ($rule, $action) {
+                    return Yii::$app->response->redirect(['/site/login']);
+                },
+            ],
+        ];
     }
 
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
-
         $status = Yii::$app->request->get('status');
+        $tasksData = $this->taskService->getTasksByStatus($status);
 
-        $tasks = $this->taskRepository;
-        $workers = $this->userRepository->getAllUsers();
-
-        if ($status) {
-            if ($status === '*') {
-                return $this->asJson($tasks->getAllTasks());
-            }
-            return $this->asJson($tasks->filterByStatus($status)->asArray()->all());
+        if (Yii::$app->request->isAjax) {
+            return $this->asJson($tasksData['tasks']);
         }
+
         return $this->render('index', [
-            'tasksByStatus' => $tasks->getAllTasks(),
-            'workers' => $workers,
+            'tasksByStatus' => $tasksData['tasks'],
+            'workers' => $tasksData['workers']
         ]);
     }
 
     public function actionView($id)
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
+        $task = $this->taskService->getTask($id);
 
         return $this->render('view', [
-            'task' => TaskModel::findOne($id),
+            'task' => $task,
         ]);
     }
 
     public function actionCreate()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
-
         $task = new TaskModel();
-
         $task->user_id = Yii::$app->user->id;
-        if ($task->load(Yii::$app->request->post()) && $task->validate()) {
-            $nameError = $this->validateText($task->name);
-            $descriptionError = $this->validateText($task->description);
-            if ($nameError === false) {
-                $task->addError('name', 'Название задачи может содержать только буквы или цифры');
-            } else if ($descriptionError === false) {
-                $task->addError('description', 'Описание задачи может содержать только буквы или цифры');
-            } else {
-                if ($task->save()) {
-                    return $this->redirect(['view', 'id' => $task->id]);
-                }
 
-            }
+        if ($task->load(Yii::$app->request->post()) && $task->validate()) {
+            $this->taskService->createTask($task);
+            return $this->redirect(['view', 'id' => $task->id]);
         }
 
         return $this->render('create', [
             'task' => $task,
-//            'worker' => $worker,
         ]);
     }
 
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
-
-        $task = $this->taskRepository->getTaskById($id);
-        $workers = User::find()->all();
-        $currentWorker = User::findOne($task->user_id);
+        $task = $this->tasks->getTaskById($id);
+        $workers = $this->users->getAllWorkers();
+        $currentWorker = $this->users->findWorkersByUserId($task->user_id);
 
         if ($task->load(Yii::$app->request->post()) && $task->validate()) {
+            $this->taskService->updateTask($task);
 
-            $this->ratingService->ratingCalculation($task);
-
-            $nameError = $this->validateText($task->name);
-
-            $descriptionError = $this->validateText($task->description);
-
-            if ($nameError === false) {
-                $task->addError('name', 'Название задачи может содержать только буквы или цифры');
-            } else if ($descriptionError === false) {
-                $task->addError('description', 'Описание задачи может содержать только буквы или цифры');
-            } else {
-                if ($task->save()) {
-                    return $this->redirect(['view', 'id' => $task->id]);
-                }
-            }
+            return $this->redirect(['view', 'id' => $task->id]);
         }
 
         return $this->render('update', [
@@ -127,5 +105,4 @@ class TaskController extends \yii\web\Controller
             'currentWorker' => $currentWorker,
         ]);
     }
-
 }

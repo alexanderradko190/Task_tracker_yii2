@@ -42,4 +42,14 @@ class UserRepository implements UserRepositoryInterface
             ->asArray()
             ->all();
     }
+
+    public function getAllWorkers(): array
+    {
+        return User::find()->all();
+    }
+
+    public function findWorkersByUserId($userId): User
+    {
+        return User::findOne($userId);
+    }
 }

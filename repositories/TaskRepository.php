@@ -3,16 +3,17 @@
 namespace app\repositories;
 
 use app\models\TaskModel;
-use DateTime;
 use yii\db\ActiveQuery;
 
 class TaskRepository implements TaskRepositoryInterface
 {
-    private $query;
+    private ActiveQuery $query;
+
     public function __construct()
     {
         $this->query = TaskModel::find()->with(['user']);
     }
+
     public function getUnresolvedTasksBySort(): array
     {
         return TaskModel::find()->where(['not', ['status' => TaskModel::IS_READY]])->orderBy(['updated_at' => SORT_DESC])->all();
