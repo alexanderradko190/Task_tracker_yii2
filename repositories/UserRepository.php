@@ -7,7 +7,7 @@ use yii\db\Query;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function getWorkersByRating(): array
+    public function getAllWorkersByRating(): array
     {
         $query = new Query();
         $query->select('u.username, w.rating')

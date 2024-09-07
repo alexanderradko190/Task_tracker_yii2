@@ -2,8 +2,10 @@
 
 namespace app\models;
 
+use yii\db\ActiveRecord;
+
 /**
- * This is the model class for table "workers".
+ * Workers
  *
  * @property int $id
  * @property string $fio
@@ -13,19 +15,15 @@ namespace app\models;
  * @property string|null $created_at
  * @property string|null $updated_at
  */
-class WorkerModel extends \yii\db\ActiveRecord
+class WorkerModel extends ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+//**************** ActiveRecord ************************//
+
     public static function tableName()
     {
         return 'workers';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -36,9 +34,6 @@ class WorkerModel extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [

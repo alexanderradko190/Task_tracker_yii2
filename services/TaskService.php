@@ -49,7 +49,17 @@ class TaskService
         return $this->tasks->getTaskById($id);
     }
 
-    public function createTask(TaskModel $task)
+    public function getTasks(): array
+    {
+        return $this->tasks->getAllTasks();
+    }
+
+    public function getTasksById(): array
+    {
+        return $this->tasks->getAllTasksById();
+    }
+
+    public function createTask(TaskModel $task): void
     {
         $nameError = $this->validateText($task->getName());
         $descriptionError = $this->validateText($task->getDescription());
@@ -68,11 +78,7 @@ class TaskService
             );
         }
 
-        if ($task->hasErrors()) {
-            return false;
-        }
-
-        return $task->save();
+        $task->save();
     }
 
     public function updateTask($task): void

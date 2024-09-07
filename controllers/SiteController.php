@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\SignupForm;
+use app\models\RegisterForm;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -145,7 +145,7 @@ class SiteController extends Controller
 
     public function actionSignup()
     {
-        $model = new SignupForm();
+        $model = new RegisterForm();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {

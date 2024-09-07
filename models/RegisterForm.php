@@ -4,32 +4,35 @@ namespace app\models;
 
 use yii\base\Model;
 
-/**
- * Signup form
- */
-class SignupForm extends Model
+class RegisterForm extends Model
 {
 
     public $username;
     public $email;
     public $password;
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This username has already been taken.'],
+            ['username',
+                'required',
+                'message' => 'Поле "Имя пользователя" должно быть заполнено'
+            ],
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Это имя уже занято'],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'trim'],
-            ['email', 'required'],
+            ['email',
+                'required',
+                'message' => 'Поле "email" должно быть заполнено'
+            ],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
-            ['password', 'required'],
+            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Этот email же используется'],
+            ['password',
+                'required',
+                'message' => 'Поле "Пароль" должно быть заполнено'
+            ],
             ['password', 'string', 'min' => 6],
         ];
     }

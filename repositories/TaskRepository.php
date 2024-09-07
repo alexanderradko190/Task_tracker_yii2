@@ -29,7 +29,7 @@ class TaskRepository implements TaskRepositoryInterface
         return $this->query->orderBy(['updated_at' => SORT_DESC])->asArray()->all();
     }
 
-    public function getTaskAndUserData(): array
+    public function getTasksInfoByUser(): array
     {
         return TaskModel::find()
             ->select(['user.username', 'tasks.name', 'tasks.description', 'tasks.date_end', 'tasks.status', 'tasks.story_point'])

@@ -2,26 +2,42 @@
 
 namespace app\controllers;
 
-use app\repositories\UserRepository;
+use app\services\WorkerService;
 use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 
-class WorkerController extends \yii\web\Controller
+class WorkerController extends Controller
 {
-    private $userRepository;
+    private WorkerService $workerService;
 
-    public function __construct($id, $module, UserRepository $userRepository, $config = [])
+    public function __construct($id, $module, WorkerService $workerService, $config = [])
     {
-        $this->userRepository = $userRepository;
+        $this->workerService = $workerService;
         parent::__construct($id, $module, $config);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+                'denyCallback' => function ($rule, $action) {
+                    return Yii::$app->response->redirect(['/site/login']);
+                },
+            ],
+        ];
     }
 
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
-
-        $workers = $this->userRepository->getAllUsers();
+        $workers = $this->workerService->getWorkers();
 
         return $this->render('index', [
             'workers' => $workers,
@@ -30,14 +46,10 @@ class WorkerController extends \yii\web\Controller
 
     public function actionRating()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/site/login']);
-        }
-
-        $ratingData = $this->userRepository->getWorkersByRating();
+        $workersByRating = $this->workerService->getWorkersByRating();
 
         return $this->render('rating', [
-            'ratingData' => $ratingData,
+            'workersByRating' => $workersByRating
         ]);
     }
 

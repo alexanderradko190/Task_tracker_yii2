@@ -2,30 +2,48 @@
 
 namespace app\controllers\api;
 
-use app\repositories\TaskRepository;
+use app\services\TaskService;
+use yii\filters\AccessControl;
 use yii\rest\Controller;
 
 class TasksController extends Controller
 {
-    private $taskRepository;
+    private TaskService $taskService;
 
-    public function __construct($id, $module, TaskRepository $taskRepository, $config = [])
-    {
-        $this->taskRepository = $taskRepository;
+    public function __construct(
+        $id,
+        $module,
+        TaskService $taskService,
+        $config = []
+    ) {
+        $this->taskService = $taskService;
         parent::__construct($id, $module, $config);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'task-status'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
     }
 
     public function actionIndex()
     {
-        $tasks = $this->taskRepository->getAllTasksById();
-
-        return $tasks;
+        return $this->taskService->getTasksById();
     }
 
     public function actionTaskStatus()
     {
-        $tasks = $this->taskRepository->getAllTasks();
+        return $this->taskService->getTasks();
 
-        return $tasks;
     }
 }

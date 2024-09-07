@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\db\ActiveRecord;
+
 /**
  * Tasks
  *
@@ -13,7 +15,7 @@ namespace app\models;
  * @property string|null $description
  * @property int|null $user_id
  */
-class TaskModel extends \yii\db\ActiveRecord
+class TaskModel extends ActiveRecord
 {
     const IS_NEW = 'Новая';
     const AT_WORK = 'В работе';
@@ -22,9 +24,6 @@ class TaskModel extends \yii\db\ActiveRecord
     const READY_TO_RELEASE = 'Готова к релизу';
     const NEED_INFO = 'Требует информации';
     const IS_READY = 'Решена';
-
-//    private string $name = '';
-//    private string $description = '';
 
     public function getName(): string
     {
@@ -37,14 +36,14 @@ class TaskModel extends \yii\db\ActiveRecord
     }
 
   //**************** ActiveRecord ************************//
+
     public static function tableName()
     {
         return 'tasks';
     }
-
     /**
      * {@inheritdoc}
-     */
+    */
     public function rules()
     {
         return [

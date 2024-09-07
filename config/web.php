@@ -42,16 +42,18 @@ $config = [
             ],
         ],
 
-//        Управляет распознаванием ссылок строки 46-52
         'db' => $db,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/tasks'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/users'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/data'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/workers-rating'],
+                'POST api/auth/register' => 'api/auth/register',
+                'POST api/auth/login' => 'api/auth/login',
+                'POST api/auth/logout' => 'api/auth/logout',
+                'GET api/tasks' => 'api/tasks',
+                'GET api/workers' => 'api/workers',
+                'GET api/tasks-info' => 'api/tasks-info',
+                'GET api/workers-rating' => 'api/workers-rating',
                 '/' => 'task/index',
                 'task/<id:\d+>' => 'task/view',
                 'task/update/<id:\d+>' => 'task/update',

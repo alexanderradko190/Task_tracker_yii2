@@ -6,7 +6,7 @@ use app\services\WorkerService;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
 
-class WorkersRatingController extends Controller
+class WorkersController extends Controller
 {
     private WorkerService $workerService;
 
@@ -36,8 +36,8 @@ class WorkersRatingController extends Controller
         ];
     }
 
-    public function actionIndex()
+    public function actionIndex(): array
     {
-        return $this->workerService->getWorkersRating();
+        return $this->workerService->getWorkersById();
     }
 }
